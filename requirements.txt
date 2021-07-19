@@ -1,0 +1,6 @@
+python-telegram-bot>=13.6
+pillow>=8.2.0
+pymongo
+dnspython
+requests
+ibm-watson>=5.2.0

@@ -1,0 +1,13 @@
+# exclude everything except listed below
+*
+!.gitignore
+!readme.md
+!constants.py
+!bot1.py
+!bot1_responses.py
+!bot2.py
+!bot3.py
+!.travis.yml
+!requirements.txt
+!setup.py
+# etc...
