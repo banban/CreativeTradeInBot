@@ -776,7 +776,6 @@ class Bot:
         """
         bot sends 1 document, calling this function multiple times
         """
-        #doc = update.message.document
         user_data = context.user_data
         chat_data = context.chat_data
 

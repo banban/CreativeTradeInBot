@@ -1,5 +1,6 @@
 # exclude everything except listed below
 *
+!images/
 !.gitignore
 !readme.md
 !constants.py
