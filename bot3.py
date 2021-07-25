@@ -168,6 +168,16 @@ class Bot:
         #print("start:redirecting")
         return SELECTING_ACTION
 
+    def get_user_info(self, chat_id, context: CallbackContext):
+        _chat = context.bot.get_chat(chat_id=chat_id)
+        result = ""
+        if (_chat.username is not None and _chat.username != "None"):
+            result = _chat.username
+        elif (_chat.first_name is not None and _chat.first_name != "None"):
+            result = f"{_chat.first_name} {_chat.last_name}"
+        else:
+            result = str(chat_id)
+        return result
 
     def history(self, update: Update, context: CallbackContext) -> str:
         #print("history of otcoming trades")
@@ -201,7 +211,7 @@ class Bot:
             _text = ""
             _image_ids = ""
             transNo +=1
-            facts={'Trans No': str(transNo), 'Trade Date': str(tran['trans_date'])[0:16]} #"%d/%m/%y %H:%M"
+            facts={'From': self.get_user_info(tran['from_chat_id'], context), 'To': self.get_user_info(tran['to_chat_id'], context), 'Trans No': str(transNo), 'Trade Date': str(tran['trans_date'])[0:16]} #"%d/%m/%y %H:%M"
             #facts["To owner"] = str(tran['to_chat_id'])
             for key, value in item.items():
                 facts[key] = str(value)
@@ -300,6 +310,9 @@ class Bot:
                 facts[key] = str(value)
                 if (key =='Images'):
                     _image_ids = str(value)
+                if (key =='chat_id'):
+                    facts['Owner'] = self.get_user_info(value, context)
+
             _text = Bot.facts_to_str(facts)
             item_message = context.bot.send_message(chat_id=update.callback_query.message.chat_id
                 ,text=_text
@@ -704,7 +717,7 @@ class Bot:
                 item2=None
 
         if (item1 is None):
-            validation_error = "❌Sorry, you have no item to trade-in with others yet, please update you item first!"
+            validation_error = "❌Sorry, you have no item to trade-in with others yet, please update your item first!"
         elif (item2 is None):
             validation_error = "❌Sorry, that item is not avaialable anymore!"
         elif (item1['_id'] == item2['_id']):

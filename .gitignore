@@ -9,6 +9,7 @@
 !bot1_responses.py
 !bot2.py
 !bot3.py
+!Procfile
 !.travis.yml
 !requirements.txt
 !setup.py
